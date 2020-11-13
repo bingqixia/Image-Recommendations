@@ -53,7 +53,7 @@ def importDB():
         group = group[(group['price'] > 10) & (group['price'] < 1000)]
         tmp = group[:2000]
         if data is not None:
-            data = pd.concat([data, tmp])
+            data = pd.concat([data, tmp], ignore_index=True)
         else:
             data = tmp
     print(name, data.shape[0])
