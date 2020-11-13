@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section class="gallery">
+        <div class="galleryWrapper">
+            <div class="item">
+                <h3> INPUT IMAGE</h3>
+                <img src="{{inputImage.imageUrl}}" alt="{{inputImage.imageName}}" id="showSimilarInPopup"> 
+                <div class="caption">
+                    {{inputImage.imageName}}
+                </div>
+            </div>
+            <div class="galleryContent">
+                <h3> SIMILAR IMAGES</h3>
+                {% for image in similarImages %}
+                <div class="item" style="position:relative;">
+                    <div class="similar" style="position:absolute;top:10;right:0;z-index:2">
+                        <button type="button" class="button1" onclick="window.location.href='{{ url_for( 'main.similar', itemId='') }}{{image[0].itemId}}';">相似宝贝</button>
+                        {% if image in stars %}
+                        <form action="/delstar" method="post">
+                            <button type="submit" class="button3" value="{{image[0].itemId}}" name="delStar" id="{{image[0].itemId}}" onClick="addStar(this)">取消关注</button>
+                        </form>
+                        {% else %}
+                        <form action="/addstar" method="post">
+                            <button type="submit" class="button2" value="{{image[0].itemId}}" name="toStar" id="{{image[0].itemId}}" onClick="addStar(this)">添加关注</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <img id="popupImage{{loop.index}}" onclick="imageClicked(this.id)" src="{{image[0].imageUrl}}" alt="{{image[0].imageName}}" id="showSimilarInPopup"> 
+                    <div class="caption">
+                        {{image[0].imageName}} ({{image[1]}})
+                    </div>
+                </div>               
+                {% endfor %}
+            </div>     
+        </div>
+    </section>
+
+    <!-- The Modal for showing a selected image enlarged -->
+    <div id="myModal" class="modal" style="z-index:3">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="thePopupImageID">
+        <div id="caption"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/imagemodal.js') }}"></script>
+{% endblock content %}

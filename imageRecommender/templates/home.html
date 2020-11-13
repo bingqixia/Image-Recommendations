@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section class="gallery">
+        <div class="galleryWrapper">
+            <div class="galleryContent">
+                {% for image in images.items %} 
+                    <div class="item" style="position:relative;">
+                        <div class="similar" style="position:absolute;top:10;right:0;z-index:2">
+                            <button type="button" class="button1" onclick="window.location.href='{{ url_for( 'main.similar', itemId='') }}{{image.itemId}}';">相似宝贝</button>
+                            {% if image in stars %}
+                            <form action="/delstar" method="post">
+                                <button type="submit" class="button3" value="{{image.itemId}}" name="delStar" id="{{image.itemId}}" onClick="addStar(this)">取消关注</button>
+                            </form>
+                            {% else %}
+                            <form action="/addstar" method="post">
+                                <button type="submit" class="button2" value="{{image.itemId}}" name="toStar" id="{{image.itemId}}" onClick="addStar(this)">添加关注</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                        <img src="{{image.imageUrl}}" alt="{{image.imageName}}" id="showSimilarInPopup"> 
+                        <div class="caption">
+                            {{image.imageName}}
+                        </div>
+                    </div>                
+                {% endfor %}
+            </div>
+            <div class="pagination">
+            {% for page_num in images.iter_pages(left_edge=2, right_edge=2, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if images.page == page_num %}
+                        <a class="currentpage" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="otherpages" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/addstar.js') }}"></script>
+{% endblock content %}
