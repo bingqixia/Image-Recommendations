@@ -47,10 +47,14 @@ def importDB():
     print('in')
     # ,cat_id,item_name,price,img_url
     images = pd.read_csv('db.csv')
-    print(images.shape[0])
-    for i, r in images.iterrows():
-        img = Galleryimages(itemId=str(int(r['item_id'])), catId=str(int(r['cat_id'])), imageName=r['item_name'], \
-        itemPrice=r['price'], imageUrl=r['img_url'])
-        db.session.add(img)
-        db.session.commit()
+    grouped = images.groupby(['cat_id'])
+    for name, group in grouped:
+        group = group[(group['price'] > 10) & (group['price'] < 1000)]
+        data = group[:1000]
+        print(name, data.shape[0])
+        for i, r in group.iterrows():
+            img = Galleryimages(itemId=str(int(r['item_id'])), catId=str(int(r['cat_id'])), imageName=r['item_name'], \
+            itemPrice=r['price'], imageUrl=r['img_url'])
+            db.session.add(img)
+            db.session.commit()
     db.session.close() 
