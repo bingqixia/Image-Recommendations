@@ -24,7 +24,7 @@ def createApp():
     from imageRecommender.main.routes import main
     from imageRecommender.commands.commands import cmd
     app.register_blueprint(main)
-    app.register_blueprint(cmd)
-    # app.register_blueprint(cmd, cli_group=None)
+    # app.register_blueprint(cmd)
+    app.register_blueprint(cmd, cli_group=None)
 
     return app

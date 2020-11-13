@@ -15,7 +15,7 @@ END_POINT = 'imagesearch.%s.aliyuncs.com'%REGION
 
 class ImageInfo(object):
     def __init__(self, item_id, cat_id, url, item_name, price, str_attr=None):
-        self.item_id = item_id
+        self.item_id = int(item_id)
         self.item_name = item_name 
         self.pic_content = self.get_img_base64(url)
         self.cat_id = cat_id

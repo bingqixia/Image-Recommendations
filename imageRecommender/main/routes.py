@@ -44,9 +44,9 @@ def search(image, start, num):
     if res:
         auctions = res['Auctions']
         for itm in auctions:
-            if int(itm['ProductId']) == image.itemId:
+            if str(itm['ProductId']) == image.itemId:
                 continue
-            pid = int(itm['ProductId'])
+            pid = str(itm['ProductId'])
             # print('pid: %d'%pid)
             imgItem = Galleryimages.query.filter_by(itemId=pid)
             if imgItem:
@@ -60,7 +60,7 @@ def search(image, start, num):
 def similar():
     selectedId = request.args.get('itemId')
     if selectedId is not None and selectedId != '':
-        imageEntry = Galleryimages.query.filter_by(itemId=int(selectedId)) 
+        imageEntry = Galleryimages.query.filter_by(itemId=str(selectedId)) 
         if imageEntry:
             image = imageEntry[0]
             # print('select: %d'%image.itemId)
@@ -111,10 +111,10 @@ def addStar():
         pid = request.form['toStar']
         if pid is not None and pid != '':
             # print('pid: %s' % pid)
-            record = UserStar.query.filter_by(itemId=int(pid), userName=name).first()
+            record = UserStar.query.filter_by(itemId=str(pid), userName=name).first()
             if record:
                 db.session.delete(record)
-            newFollow = UserStar(itemId=int(pid), userName=name, insertDate=datetime.now())
+            newFollow = UserStar(itemId=str(pid), userName=name, insertDate=datetime.now())
             db.session.add(newFollow)
             db.session.commit()
             db.session.close
@@ -133,7 +133,7 @@ def delStar():
         pid = request.form['delStar']
         if pid is not None and pid != '':
             # newFollow = UserStar(itemId=int(pid), userName=name, insertDate=datetime.now())
-            record = UserStar.query.filter_by(itemId=int(pid), userName=name).first()
+            record = UserStar.query.filter_by(itemId=str(pid), userName=name).first()
             db.session.delete(record)
             db.session.commit()
             db.session.close

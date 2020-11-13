@@ -49,7 +49,7 @@ def importDB():
     images = pd.read_csv('db.csv')
     print(images.shape[0])
     for i, r in images.iterrows():
-        img = Galleryimages(itemId=r['item_id'], catId=r['cat_id'], imageName=r['item_name'], \
+        img = Galleryimages(itemId=str(int(r['item_id'])), catId=str(int(r['cat_id'])), imageName=r['item_name'], \
         itemPrice=r['price'], imageUrl=r['img_url'])
         db.session.add(img)
         db.session.commit()
