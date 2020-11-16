@@ -14,7 +14,8 @@ main = Blueprint('main', __name__)
 def home():
     if 'userName' in request.cookies:
         page = request.args.get('page', 1, type=int)
-        gImages = Galleryimages.query.paginate(page=page, per_page=100)
+        gImages = Galleryimages.query.order_by('itemId').paginate(page=page, per_page=100)
+        
         sImages = getStar(request.cookies.get('userName'))
         # print(sImages)
         return render_template('home.html', images = gImages, stars=sImages)
@@ -79,14 +80,19 @@ def similar():
 def recommend():
     # .order_by(model.Entry.amount.desc())
     def sortKey_img(val): 
-        return val.itemId
+        return val.itemPrice
     def sortKey_list(val): 
         if val:
             return val[1]
     if 'userName' in request.cookies:
         sImages = getStar(request.cookies.get('userName'))
-        sImages.sort(key=sortKey_img, reverse = True)
-        lst = sImages[:10]
+        sImages.sort(key=sortKey_img, reverse = False)
+        added = []
+        lst = []
+        for s in sImages:
+            if s.catId not in added:
+                lst.append(s)
+                added.append(s.catId)
         similars = []
         for l in lst:
             imgEntry = Galleryimages.query.filter_by(itemId=l.itemId)
