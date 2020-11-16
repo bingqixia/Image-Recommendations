@@ -82,7 +82,7 @@ class ImageOption(object):
         request.num = num
         request.start = start
         request.filter = my_filter
-        runtime_option = RuntimeOptions()
+        runtime_option = RuntimeOptions(read_timeout=50000, connect_timeout=50000)
         response = self.client.search_image_by_pic_advance(request, runtime_option)
         # print(response.to_map())
         return response.to_map()
