@@ -8,8 +8,8 @@ from alibabacloud_oss_util.models import RuntimeOptions
 # from urllib.request import urlopen
 
 REGION = 'cn-shanghai'
-ACCESS_KEY = 'LTAI4Fz2nxCeTFxKVUcJtWDr'
-ACCESS_SECRET = 'Aqre80rlxahMsyMnULkXPFnVK8nfz1'
+ACCESS_KEY = ''
+ACCESS_SECRET = ''
 INSTANCE_NAME = 'test1111'
 END_POINT = 'imagesearch.%s.aliyuncs.com'%REGION
 
