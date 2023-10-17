@@ -1,6 +1,6 @@
-# Similar image recommender application based on Flask for Heroku
+# Similar image recommendation application based on Flask for Heroku
 
-This is a gallery application for similar image recommender, used Python Object-Oriented Development, flask framework, developed on Heroku.
+This is a gallery application for similar image recommender, used Python Object-Oriented Development, Flask framework, developed on Heroku.
 
 Recommendation algorithms use `Alibaba Cloud's machine learning API`. So if you want run this dome application, you need replace the Access Key with your own.
 
